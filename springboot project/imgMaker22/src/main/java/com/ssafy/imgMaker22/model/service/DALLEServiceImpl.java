@@ -1,11 +1,12 @@
 package com.ssafy.imgMaker22.model.service;
 
 import com.ssafy.imgMaker22.config.ChatGptConfig;
-import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
 import com.ssafy.imgMaker22.model.dto.image.ImageGenerationRequest;
 import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponse;
+import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,8 +23,8 @@ public class DALLEServiceImpl implements DALLEService{
 
     private final RestTemplate restTemplate;
 
-//    @Value("${api}")
-    private String apiKey = "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"; // 수정필요
+    @Value("${api}")
+    private String apiKey;
 
     public ImageGenerationResponse makeImages(PromptRequest commentRequest){
 

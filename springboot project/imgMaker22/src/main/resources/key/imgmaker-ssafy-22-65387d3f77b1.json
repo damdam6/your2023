@@ -1,0 +1,15 @@
+{
+  "type": "service_account",
+  "project_id": "imgmaker-ssafy-22",
+  "private_key_id": "65387d3f77b17667740945c42bf15acb5eb01b6d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMO58edW5fwJEb\npvdVPcuEveIOdubyWT6NvwBQ66Ijr7bnNLsdIKFBvT5kcf4bW6unh2dbV2l6BBwF\nePOTdaMgcnO2u+5E6IaLJdn9dj34fjFa3R/QJdHjSovTIQjiksKGAEJDHy4u5/yj\nMfde76Df+10G7ceBw1cDA4NX/CjzLoFgIs2fnZz437t0/bDGiNs99+H6CeIfw6Tv\nr6WSbBzgpRrIl6d5Aku81mvWLGAVLTyzaeTAMjhwKOdLdSoB3GPV1qlGO6BeJtl/\nXR6M9GZ7YPpW1vcuLi/IXnmy2XPfr4D5kgJ6GGjgazDeUhFF+vdj+xGeBW6OlusS\nulcW79GBAgMBAAECggEAIDT6x9Pe/wygFYtED9Y55QoIvx0zGF7IhZPsWdZ+8D/C\niT2AkHxX0cUlNLPhTbEsJbQtsXLceFhzjs1fJA72FaTW6KdEUOuWZBUpBlaCOVC1\nOc4LOUjti3lzCW15ODnKoVUjHfCp2M3OwnGbwAXsCcZbCj+vKaCDdT81lEd4sbiI\nat+6UUY9JbfB3mci995o4fPkYLyKcYuwko1YF0HLlkKnFbXw6ZZ6lhwDVKxjPllp\nZH3qXnBxBq7H79lxUiOLda9WeNgGjp39e69sKR1uA4GEoca0HBbPDmvs8XLgkZca\n/Fp+Lq0ND/Py0Xh3whfp6V64IW1cGpZ9P8F4M0vrUQKBgQD3EwwDk7UvHwyJPkZs\nnQhHfLS1SDJ4MkFqQnFlBYpkrAXxRDts9mT/fZXHkVLlN/5/TXBOXT3liycBu1i4\n8vJeERZWWttCpnA9iI6J07ZTVSYTxHfxkcMNuQBntCxLcUp+pKEO/5Nmma8NX9bd\nr7mAhiTQQ7L+o5moE8qau4DQFQKBgQDTnF/0prU3+g2p/5ogl4wAnGjw4kTrGiqD\n14co4UB4LFexDPFHuXIrKg8j0YbGOLE1+2fq2BjsMbm5zZspaI+SW8e57ydo0tK4\njpOIWZcSKP29WMwDfGSEC5P8aSSmIN82BA3+RjL5+mrsPwNO3qrJfi7+l/ApIEFb\n6JnIxdfqvQKBgQDXfj1UQVgdqS795Nr3kF7QOuxB0J50RyDW1Oyh95slAwSL0b8i\n4iRk0dv5G775PUUzMw9oydpagmubDxPq+7p4YN7ioovqLdBnWts3SvgS5ok3ZHxY\nrZE6PskjqfmYM0+N9Xij5DVjn1cWiyiUYdehSV6CZwmPHpG+DsT+/9rxoQKBgGlX\nkkknaFVabMzxClgpOS/grTklWuuy1fFWLNnD8KUiZfEkoUR0ZApq4KiTGMW62TUn\nV18IfreuNWfym8hsXfSdLfs4u+Sp9u6bQ4SAHP2UXGSTPNSLazp0zRG9gdoVySiJ\nsjGf3qak6+95mvr7TAgMgfaJyquefAr16wCQxOD9AoGAXU2CP66BsCklvPXwjwlG\neaT40NGDTFfi2Shwi1huUHDdiZSQ6ear8BT3iD0K24qNK35+gg6eNL9jCp7zqIeo\ny2gLuMKeCWhYTAwKQ5lQ4zsiOT/496cUDLvbA3WUbp3b/uYG2+9zjJqLWuLwZ8kW\npbOSssj9qWpoaiYAD7PlGnM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "imgmaker-demo-service@imgmaker-ssafy-22.iam.gserviceaccount.com",
+  "client_id": "106973781883034481512",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/imgmaker-demo-service%40imgmaker-ssafy-22.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+
+

@@ -36,9 +36,10 @@ out/
 ### VS Code ###
 .vscode/
 
+
+# Ignore application properties file
+application.properties
+
 # Ignore keys
 apikey-*.json
 src/main/resources/key/
-
-# Ignore application properties file
-.properties

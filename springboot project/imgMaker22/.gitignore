@@ -40,4 +40,4 @@ out/
 resources/key/
 
 # Ignore application properties file
-application.properties
+.properties

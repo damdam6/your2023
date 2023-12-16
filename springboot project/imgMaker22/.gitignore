@@ -38,7 +38,7 @@ out/
 
 # Ignore keys
 apikey-*.json
-/key
+/key/
 
 # Ignore application properties file
 .properties

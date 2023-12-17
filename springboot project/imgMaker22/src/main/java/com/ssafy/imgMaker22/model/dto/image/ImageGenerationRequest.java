@@ -8,18 +8,19 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
-//OpenAI에 요청할 DTO Format('response_format' 추가하셔도됩니다.)
 public class ImageGenerationRequest implements Serializable {
     private String model;
     private String prompt;
+    private String response_format;
     private int n;
     private String size;
 
     @Builder
-    public ImageGenerationRequest(String prompt, int n, String size, String model) {
+    public ImageGenerationRequest(String model, String prompt, String response_format, int n, String size) {
+        this.model = model;
         this.prompt = prompt;
+        this.response_format = response_format;
         this.n = n;
         this.size = size;
-        this.model = model;
     }
 }

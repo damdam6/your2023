@@ -4,9 +4,8 @@ import com.google.cloud.spring.vision.CloudVisionTemplate;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.cloud.vision.v1.Feature;
-import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
 import com.ssafy.imgMaker22.model.dto.image.PromptDTO;
-import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
+import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -19,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CloudVisionServiceImpl implements CloudVisionService {
+public class KeywordGenerationServiceCloudVision implements KeywordGenerationService {
 
     private static final int MAX_PROMPT_COUNT = 3;
 
@@ -28,12 +27,9 @@ public class CloudVisionServiceImpl implements CloudVisionService {
     private CloudVisionTemplate cloudVisionTemplate;
 
     @Override
-    public PromptRequest makePrompt(List<ImageRequest> imageRequests) {
+    public List<PromptDTO> makePrompt(List<ImageRequest> imageRequests) {
 
         List<PromptDTO> promptList = new ArrayList<>();
-
-        promptList.add(new PromptDTO("Illustrate", 1));
-        promptList.add(new PromptDTO("realistic", 1)); // 수정필요
 
         for (ImageRequest imageRequest : imageRequests) {
             Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
@@ -48,13 +44,7 @@ public class CloudVisionServiceImpl implements CloudVisionService {
 
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (PromptDTO p:promptList) {
-            sb.append(p.getKeyword() + " ");
-        }
-
-        PromptRequest promptRequest = new PromptRequest(sb.toString().trim());
-        return promptRequest;
+        return promptList;
     }
 
 }

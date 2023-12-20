@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface MainRepository {
 
-    public int save(GeneratedImage gImage);
+    public void save(GeneratedImage gImage);
 
     public List<GeneratedImage> selectAllImages();
 

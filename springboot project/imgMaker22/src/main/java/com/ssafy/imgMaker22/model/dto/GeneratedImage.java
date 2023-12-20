@@ -1,10 +1,16 @@
 package com.ssafy.imgMaker22.model.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Entity
 public class GeneratedImage {
+
+    @Id @GeneratedValue
     private Long id;
     private String url;
     private String prompt;
@@ -16,6 +22,5 @@ public class GeneratedImage {
         this.nickname = nickname;
         this.style = style;
     }
-
 
 }

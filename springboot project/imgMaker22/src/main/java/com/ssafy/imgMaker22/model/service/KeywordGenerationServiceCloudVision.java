@@ -1,7 +1,10 @@
 package com.ssafy.imgMaker22.model.service;
 
 import com.google.cloud.spring.vision.CloudVisionTemplate;
-import com.google.cloud.vision.v1.*;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.ColorInfo;
+import com.google.cloud.vision.v1.DominantColorsAnnotation;
+import com.google.cloud.vision.v1.Feature;
 import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
 import com.ssafy.imgMaker22.model.dto.prompt.PromptDTO;
 import com.ssafy.imgMaker22.model.enums.PromptDTOEnum;
@@ -11,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,55 +33,50 @@ public class KeywordGenerationServiceCloudVision implements KeywordGenerationSer
     private CloudVisionTemplate cloudVisionTemplate;
 
     @Override
-    public List<PromptDTO> getKeywords(List<ImageRequest> imageRequests) {
+    public Flux<PromptDTO> getKeywords(List<ImageRequest> imageRequests) {
+        return Flux.fromIterable(imageRequests)
+                .flatMap(imageRequest -> {
+                    Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
 
-        List<PromptDTO> promptList = new ArrayList<>();
+                    // cloudVisionTemplate를 사용하여 동기적으로 이미지 분석 수행
+                    AnnotateImageResponse res = cloudVisionTemplate.analyzeImage(imageResource,
+                            Feature.Type.LABEL_DETECTION);
 
-        for (ImageRequest imageRequest : imageRequests) {
-            Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
-            AnnotateImageResponse res = this.cloudVisionTemplate.analyzeImage(imageResource,
-                    Feature.Type.LABEL_DETECTION);
 
-            for (EntityAnnotation e : res.getLabelAnnotationsList().stream().
-                    sorted(((o1, o2) -> (int) ((o2.getScore() - o1.getScore()) * 10000))).
-                    limit(MAX_KEYWORD_COUNT).toList()) {
-                promptList.add(new PromptDTO(e.getDescription(), e.getScore(), PromptDTOEnum.KEYWORD.getType()));
-            }
-
-        }
-
-        return promptList;
+                    return Flux.fromIterable(res.getLabelAnnotationsList())
+                            .sort((o1, o2) -> (int) ((o2.getScore() - o1.getScore()) * 10000))
+                            .take(MAX_KEYWORD_COUNT)
+                            .map(e -> new PromptDTO(e.getDescription(), e.getScore(), PromptDTOEnum.KEYWORD.getType()));
+                });
     }
 
-    public List<PromptDTO> getColors(List<ImageRequest> imageRequests){
 
-        List<PromptDTO> promptList = new ArrayList<>();
 
-        for (ImageRequest imageRequest : imageRequests) {
-            Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
-            AnnotateImageResponse res = this.cloudVisionTemplate.analyzeImage(imageResource,
-                    Feature.Type.IMAGE_PROPERTIES);
+    public Flux<PromptDTO> getColors(List<ImageRequest> imageRequests){
 
-            if (res.hasError()) {
-                System.out.format("Error: %s%n", res.getError().getMessage());
-                return null;
-            }
+        return Flux.fromIterable(imageRequests)
+                .flatMap(imageRequest -> {
+                    Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
 
-            // For full list of available annotations, see http://g.co/cloud/vision/docs
-            DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
-            for (ColorInfo color : colors.getColorsList().stream().
-                    sorted(((o1, o2) -> (int) ((o2.getScore() - o1.getScore()) * 10000))).
-                    limit(MAX_COLOR_COUNT).toList()) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("RGB(").
-                        append((int)color.getColor().getRed() + ", ").
-                        append((int)color.getColor().getGreen() + ", ").
-                        append((int)color.getColor().getBlue() + ")");
-                promptList.add(new PromptDTO(sb.toString(), 0, PromptDTOEnum.COLOR.getType()));
-            }
-        }
+                    // cloudVisionTemplate를 사용하여 동기적으로 이미지 분석 수행
+                    AnnotateImageResponse res = cloudVisionTemplate.analyzeImage(imageResource,
+                            Feature.Type.LABEL_DETECTION);
+                    DominantColorsAnnotation colors = res.getImagePropertiesAnnotation().getDominantColors();
 
-        return promptList;
+                    return Flux.fromIterable(colors.getColorsList())
+                            .sort((o1, o2) -> (int) ((o2.getScore() - o1.getScore()) * 10000))
+                            .take(MAX_COLOR_COUNT)
+                            .map(KeywordGenerationServiceCloudVision::makeRGB);
+                });
+    }
+
+    static PromptDTO makeRGB(ColorInfo color){
+        StringBuilder sb = new StringBuilder();
+        sb.append("RGB(").
+                append((int)color.getColor().getRed() + ", ").
+                append((int)color.getColor().getGreen() + ", ").
+                append((int)color.getColor().getBlue() + ")");
+        return new PromptDTO(sb.toString(), 0, PromptDTOEnum.COLOR.getType());
     }
 
 

@@ -6,7 +6,7 @@ import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponse;
 import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
 import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
 import com.ssafy.imgMaker22.model.dto.prompt.PromptDTO;
-import com.ssafy.imgMaker22.model.service.FileUploadService;
+import com.ssafy.imgMaker22.model.service.FileService;
 import com.ssafy.imgMaker22.model.service.ImageGenerationService;
 import com.ssafy.imgMaker22.model.service.KeywordGenerationService;
 import com.ssafy.imgMaker22.model.service.PromptService;
@@ -15,11 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +30,7 @@ public class MainController {
     private KeywordGenerationService cloudVisionService;
     private PromptService promptService;
     private ImageGenerationService dalle3Service;
-    private FileUploadService fileUploadService;
+    private FileService fileService;
     private final ObjectMapper mapper;
 
 
@@ -45,8 +43,13 @@ public class MainController {
 
         // 프롬프트를 위한 키워드, 색상 추출 및 프롬프트 생성
         Map<String, List<PromptDTO>> promptDTOMap = new HashMap<>();
-        promptDTOMap.put("keywords", cloudVisionService.getKeywords(imageRequests));
-        promptDTOMap.put("colors", cloudVisionService.getColors(imageRequests));
+        List<PromptDTO> keywords = new ArrayList<>();
+        cloudVisionService.getKeywords(imageRequests).subscribe((promptDTO -> keywords.add(promptDTO)));
+        promptDTOMap.put("keywords", keywords);
+        List<PromptDTO> colors = new ArrayList<>();
+        cloudVisionService.getColors(imageRequests).subscribe((promptDTO -> colors.add(promptDTO)));
+        promptDTOMap.put("colors", colors);
+
         PromptRequest promptRequest = PromptRequest.builder().prompt(promptService.makePrompt(gImage, promptDTOMap, style)).build();
 
         // 이미지 생성 및 저
@@ -54,16 +57,16 @@ public class MainController {
         try {
             imageGenerationResponse = dalle3Service.makeImages(promptRequest);
             byte[] decodedBytes = java.util.Base64.getDecoder().decode(imageGenerationResponse.getData().get(0));
-            fileUploadService.fileUpload(decodedBytes, gImage);
-
-        } catch (Exception e){ // 수정
+            fileService.fileUpload(decodedBytes, gImage);
+        } catch (Exception e) { // 수정
             e.printStackTrace(); // 수정
         }
-
-
-
 
         return new ResponseEntity<ImageGenerationResponse>(imageGenerationResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity getAllImages(HttpServletRequest request, HttpServletResponse response) {
+        return new ResponseEntity<List<String>>(fileService.getAllFileUrl(), HttpStatus.OK);
+    }
 }

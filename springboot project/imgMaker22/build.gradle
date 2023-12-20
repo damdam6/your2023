@@ -27,7 +27,6 @@ ext {
 }
 
 dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.google.cloud:spring-cloud-gcp-starter'
@@ -39,7 +38,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
 	implementation 'com.google.cloud:google-cloud-vision:3.29.0'
@@ -47,8 +46,6 @@ dependencies {
 	implementation 'com.google.cloud:google-cloud-aiplatform:0.4.0' // vertex ai
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE' // 현재 3.0.0이 최신임, 나중에 되는지 확인
-
-
 
 	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 	implementation 'org.springframework:spring-webflux'

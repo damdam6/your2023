@@ -1,6 +1,6 @@
 package com.ssafy.imgMaker22.model.service;
 
-import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.io.File;
 public class S3Uploader {
 
     @Autowired
-    private final AmazonS3 amazonS3Client;
+    private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -30,6 +30,7 @@ public class S3Uploader {
 //        return upload(uploadFile, dirName);
 //    }
 
+//    @Transactional
     public String upload(File uploadFile, String dirName) {
         String fileName = dirName + "/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
@@ -38,9 +39,11 @@ public class S3Uploader {
     }
 
     private String putS3(File uploadFile, String fileName) {
+        System.out.println(fileName);
+        System.out.println(uploadFile.toString());
         amazonS3Client.putObject(
                 new PutObjectRequest(bucket, fileName, uploadFile)
-                        .withCannedAcl(CannedAccessControlList.PublicRead)	// PublicRead 권한으로 업로드 됨
+                        .withCannedAcl(CannedAccessControlList.PublicRead)    // PublicRead 권한으로 업로드 됨
         );
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }

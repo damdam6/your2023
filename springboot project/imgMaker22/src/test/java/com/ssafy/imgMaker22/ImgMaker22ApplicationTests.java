@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ImgMaker22ApplicationTests {
 
-
-
 	@Test
 	void contextLoads() {
 		System.out.println();

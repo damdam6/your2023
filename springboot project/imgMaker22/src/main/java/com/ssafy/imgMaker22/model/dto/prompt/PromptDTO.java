@@ -1,16 +1,19 @@
-package com.ssafy.imgMaker22.model.dto.image;
+package com.ssafy.imgMaker22.model.dto.prompt;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class PromptDTO implements Comparable<PromptDTO>{
-    private String keyword;
+    private String prompt;
     private double score;
+    private String type;
 
-    public PromptDTO(String keyword, double score) {
-        this.keyword = keyword;
+    public PromptDTO(String prompt, double score, String type) {
+        this.prompt = prompt;
         this.score = score;
+        this.type = type;
     }
 
     @Override

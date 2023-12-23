@@ -9,13 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PromptServiceImpl implements PromptService{
+public class PromptServiceImpl{
 
-
-
-
-
-    @Override
     public String makePrompt(GeneratedImage gImage, Map<String, List<PromptDTO>> promptDTOMap, String style) {
 
         // 키워드 주입
@@ -40,9 +35,11 @@ public class PromptServiceImpl implements PromptService{
         }
         sb.deleteCharAt(sb.length()-1);
         sb.append(".");
-
-        gImage.setPrompt(sb.toString());
-
         return sb.toString();
+    }
+
+    public String makePromptTest(List<String> imageURLS, String style) {
+        System.out.println("not here");
+        return null;
     }
 }

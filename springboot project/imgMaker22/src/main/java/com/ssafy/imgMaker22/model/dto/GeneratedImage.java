@@ -13,7 +13,6 @@ public class GeneratedImage {
     @Id @GeneratedValue
     private Long id;
     private String url;
-    private String prompt;
     private String nickname;
     private String style;
 

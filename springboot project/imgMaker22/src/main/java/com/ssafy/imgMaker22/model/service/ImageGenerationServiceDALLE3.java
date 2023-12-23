@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,10 +30,12 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
     @Value("${openai.dalle.api}")
     private String apiKey;
 
+    @Override
     public ImageGenerationResponse makeImages(PromptRequest commentRequest){
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
+        httpHeaders.add("Content-Type", "application/json");
+//        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
         httpHeaders.add(DallE3Config.AUTHORIZATION, DallE3Config.BEARER + apiKey);
 
         ImageGenerationRequest imageGenerationRequest = ImageGenerationRequest.builder()
@@ -52,8 +53,6 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
                 requestHttpEntity,
                 ImageGenerationResponse.class
         );
-
-        System.out.println(responseEntity.toString());
 
         return responseEntity.getBody();
     }

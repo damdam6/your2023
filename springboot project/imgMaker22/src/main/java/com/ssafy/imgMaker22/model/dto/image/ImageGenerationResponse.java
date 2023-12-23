@@ -2,6 +2,7 @@ package com.ssafy.imgMaker22.model.dto.image;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,5 +12,10 @@ import java.util.List;
 public class ImageGenerationResponse {
 
     private long created;
-    private List<String> data;
+    private List<ResponseData> data;
+
+    @Getter @Setter
+    public static class ResponseData {
+        private String b64_json;
+    }
 }

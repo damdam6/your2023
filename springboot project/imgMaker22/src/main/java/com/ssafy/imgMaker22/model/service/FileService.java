@@ -11,6 +11,4 @@ public interface FileService {
 
     public List<String> getAllFileUrl();
 
-
-
 }

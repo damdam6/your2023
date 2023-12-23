@@ -1,9 +1,12 @@
 package com.ssafy.imgMaker22.model.service;
 
+import com.ssafy.imgMaker22.config.S3Uploader;
 import com.ssafy.imgMaker22.model.dto.GeneratedImage;
 import com.ssafy.imgMaker22.model.repository.MainRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,10 +20,15 @@ import java.util.Optional;
 public class FileServiceImpl implements FileService {
 
     private MainRepository mainRepository;
-
     private S3Uploader s3Uploader;
 
-    // MultipartFile을 사용 안하도록 변경함 (어자피 이미지를 MultipartFile로 받을게 아니라 byte[]로 받을 것이기 때문)
+    @Autowired
+    public FileServiceImpl(MainRepository mainRepository, S3Uploader s3Uploader) {
+        this.mainRepository = mainRepository;
+        this.s3Uploader = s3Uploader;
+    }
+
+    @Transactional
     public String fileUpload(byte[] decodedBytes, GeneratedImage gImage) throws IOException{
         String storedFileUrl = null;
         String filename = gImage.getNickname()+"_generatedImage_"+System.currentTimeMillis();

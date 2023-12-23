@@ -5,7 +5,6 @@ import com.ssafy.imgMaker22.model.dto.GeneratedImage;
 import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponse;
 import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
 import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
-import com.ssafy.imgMaker22.model.dto.prompt.PromptDTO;
 import com.ssafy.imgMaker22.model.service.FileService;
 import com.ssafy.imgMaker22.model.service.ImageGenerationService;
 import com.ssafy.imgMaker22.model.service.KeywordGenerationService;
@@ -18,9 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,29 +32,22 @@ public class MainController {
     private final ObjectMapper mapper;
 
 
-    @PostMapping("/getLabelDetection")
+    @PostMapping("/getImage")
     public ResponseEntity makeImage(HttpServletRequest request, HttpServletResponse response, @RequestBody List<ImageRequest> imageRequests) {
 
         String nickname = mapper.convertValue(request.getAttribute("nickname"), String.class);
         String style = mapper.convertValue(request.getAttribute("style"), String.class);
         GeneratedImage gImage = GeneratedImage.builder().nickname(nickname).style(style).build();
 
-        // 프롬프트를 위한 키워드, 색상 추출 및 프롬프트 생성
-        Map<String, List<PromptDTO>> promptDTOMap = new HashMap<>();
-        List<PromptDTO> keywords = new ArrayList<>();
-        cloudVisionService.getKeywords(imageRequests).subscribe((promptDTO -> keywords.add(promptDTO)));
-        promptDTOMap.put("keywords", keywords);
-        List<PromptDTO> colors = new ArrayList<>();
-        cloudVisionService.getColors(imageRequests).subscribe((promptDTO -> colors.add(promptDTO)));
-        promptDTOMap.put("colors", colors);
+        List<ImageRequest> imageUrls = new ArrayList<>(); // 여기 수정 필요
 
-        PromptRequest promptRequest = PromptRequest.builder().prompt(promptService.makePrompt(gImage, promptDTOMap, style)).build();
+        PromptRequest promptRequest = PromptRequest.builder().prompt(promptService.makePrompt(imageUrls, style)).build();
 
         // 이미지 생성 및 저
         ImageGenerationResponse imageGenerationResponse = null;
         try {
             imageGenerationResponse = dalle3Service.makeImages(promptRequest);
-            byte[] decodedBytes = java.util.Base64.getDecoder().decode(imageGenerationResponse.getData().get(0));
+            byte[] decodedBytes = Base64.getDecoder().decode(imageGenerationResponse.getData().get(0).getB64_json());
             fileService.fileUpload(decodedBytes, gImage);
         } catch (Exception e) { // 수정
             e.printStackTrace(); // 수정

@@ -1,5 +1,6 @@
 package com.ssafy.imgMaker22.model.service;
 
+import com.google.cloud.spring.vision.CloudVisionTemplate;
 import com.ssafy.imgMaker22.config.S3Uploader;
 import com.ssafy.imgMaker22.model.dto.GeneratedImage;
 import com.ssafy.imgMaker22.model.repository.MainRepository;

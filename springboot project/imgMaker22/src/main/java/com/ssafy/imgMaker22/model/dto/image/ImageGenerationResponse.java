@@ -1,5 +1,6 @@
 package com.ssafy.imgMaker22.model.dto.image;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class ImageGenerationResponse {
 
     @Getter @Setter
     public static class ResponseData {
-        private String b64_json;
+        @JsonProperty("b64_json")
+        private String b64Json;
     }
 }

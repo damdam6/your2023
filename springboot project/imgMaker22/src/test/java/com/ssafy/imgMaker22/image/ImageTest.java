@@ -3,12 +3,13 @@ package com.ssafy.imgMaker22.image;
 import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponseTest;
 import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
 import com.ssafy.imgMaker22.model.service.ImageGenerationService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-
+@Slf4j
 public class ImageTest {
 
     @Autowired
@@ -28,9 +29,9 @@ public class ImageTest {
         ImageGenerationResponseTest imageGenerationResponse = null;
         try {
             imageGenerationResponse = dalle3Service.makeImagesURLTEST(promptRequest);
-            System.out.println("URL : " + imageGenerationResponse.getData().get(0).getUrl());
+            log.info("URL : {}", imageGenerationResponse.getData().get(0).getUrl());
         } catch (Exception e){ // 수정
-            e.printStackTrace(); // 수정
+            log.error("error message : {}", e.getMessage());
         }
     }
 }

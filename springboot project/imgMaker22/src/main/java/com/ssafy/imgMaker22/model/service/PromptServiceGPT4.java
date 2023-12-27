@@ -35,7 +35,7 @@ public class PromptServiceGPT4 implements PromptService{
         httpHeaders.setContentType(MediaType.parseMediaType(GPT4Config.MEDIA_TYPE));
         httpHeaders.add(GPT4Config.AUTHORIZATION, GPT4Config.BEARER + apiKey);
 
-        System.out.println(GPT4Config.createRequestParam(GPT4Config.createPrompt(style), imageURLS));
+        log.info("imageURL INFO : {}", imageURLS);
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>(GPT4Config.createRequestParam(GPT4Config.createPrompt(style), imageURLS), httpHeaders);
 
@@ -44,7 +44,7 @@ public class PromptServiceGPT4 implements PromptService{
         );
 
         String prompt = Objects.requireNonNull(responseEntity.getBody()).getContent();
-        System.out.println("GPT 4 response : " + prompt);
+        log.info("GPT 4 response : {}", prompt);
 
         return prompt;
     }
@@ -56,7 +56,7 @@ public class PromptServiceGPT4 implements PromptService{
         httpHeaders.setContentType(MediaType.parseMediaType(GPT4Config.MEDIA_TYPE));
         httpHeaders.add(GPT4Config.AUTHORIZATION, GPT4Config.BEARER + apiKey);
 
-        System.out.println(GPT4Config.createRequestParam(GPT4Config.createPrompt(style), imageURLS));
+        log.info("imageURL INFO : {}", imageURLS);
 
         HttpEntity<String> requestHttpEntity = new HttpEntity<>(GPT4Config.createRequestParam(GPT4Config.createPrompt(style), imageURLS), httpHeaders);
 
@@ -64,7 +64,7 @@ public class PromptServiceGPT4 implements PromptService{
                 GPT4Config.IMAGE_URL, requestHttpEntity, PromptGenerationResponse.class
         );
 
-        System.out.println("GPT 4 response : " + Objects.requireNonNull(responseEntity.getBody()).getContent());
+        log.info("GPT 4 response : {}", Objects.requireNonNull(responseEntity.getBody()).getContent());
 
         return Objects.requireNonNull(responseEntity.getBody()).getContent();
     }

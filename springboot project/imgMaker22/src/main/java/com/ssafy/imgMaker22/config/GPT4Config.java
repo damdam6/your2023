@@ -50,6 +50,6 @@ public class GPT4Config {
 
     public static String createPrompt(String style){
         return "make a prompt for dalli to draw " +  style + " style picture using elements from these pictures.\n" +
-                "dont draw picture. just tell me the prompt";
+                "do not draw picture. just tell me the prompt";
     }
 }

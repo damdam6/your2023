@@ -6,7 +6,7 @@ import com.google.cloud.vision.v1.ColorInfo;
 import com.google.cloud.vision.v1.DominantColorsAnnotation;
 import com.google.cloud.vision.v1.Feature;
 import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
-import com.ssafy.imgMaker22.model.dto.prompt.PromptDTO;
+import com.ssafy.imgMaker22.model.dto.prompt.PromptDto;
 import com.ssafy.imgMaker22.model.enums.PromptDTOEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class KeywordGenerationServiceCloudVision implements KeywordGenerationSer
     private CloudVisionTemplate cloudVisionTemplate;
 
     @Override
-    public Flux<PromptDTO> getKeywords(List<ImageRequest> imageRequests) {
+    public Flux<PromptDto> getKeywords(List<ImageRequest> imageRequests) {
         return Flux.fromIterable(imageRequests)
                 .flatMap(imageRequest -> {
                     Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
@@ -46,13 +46,13 @@ public class KeywordGenerationServiceCloudVision implements KeywordGenerationSer
                     return Flux.fromIterable(res.getLabelAnnotationsList())
                             .sort((o1, o2) -> (int) ((o2.getScore() - o1.getScore()) * 10000))
                             .take(MAX_KEYWORD_COUNT)
-                            .map(e -> new PromptDTO(e.getDescription(), e.getScore(), PromptDTOEnum.KEYWORD.getType()));
+                            .map(e -> new PromptDto(e.getDescription(), e.getScore(), PromptDTOEnum.KEYWORD.getType()));
                 });
     }
 
 
 
-    public Flux<PromptDTO> getColors(List<ImageRequest> imageRequests){
+    public Flux<PromptDto> getColors(List<ImageRequest> imageRequests){
 
         return Flux.fromIterable(imageRequests)
                 .flatMap(imageRequest -> {
@@ -70,13 +70,13 @@ public class KeywordGenerationServiceCloudVision implements KeywordGenerationSer
                 });
     }
 
-    static PromptDTO makeRGB(ColorInfo color){
+    static PromptDto makeRGB(ColorInfo color){
         StringBuilder sb = new StringBuilder();
         sb.append("RGB(").
                 append((int)color.getColor().getRed() + ", ").
                 append((int)color.getColor().getGreen() + ", ").
                 append((int)color.getColor().getBlue() + ")");
-        return new PromptDTO(sb.toString(), 0, PromptDTOEnum.COLOR.getType());
+        return new PromptDto(sb.toString(), 0, PromptDTOEnum.COLOR.getType());
     }
 
 

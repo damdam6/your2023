@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,8 +26,6 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
 
     private final RestTemplate restTemplate;
 
-    private final ObjectMapper objectMapper;
-
     @Value("${openai.dalle.api}")
     private String apiKey;
 
@@ -34,8 +33,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
     public ImageGenerationResponse makeImages(PromptRequest commentRequest){
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Type", "application/json");
-//        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
+        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
         httpHeaders.add(DallE3Config.AUTHORIZATION, DallE3Config.BEARER + apiKey);
 
         ImageGenerationRequest imageGenerationRequest = ImageGenerationRequest.builder()
@@ -61,8 +59,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
     public ImageGenerationResponseTest makeImagesURLTEST(PromptRequest commentRequest) throws JsonProcessingException {
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Type", "application/json");
-//        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
+        httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
         httpHeaders.add(DallE3Config.AUTHORIZATION, DallE3Config.BEARER + apiKey);
 
         ImageGenerationRequest imageGenerationRequest = ImageGenerationRequest.builder()
@@ -73,7 +70,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
                 .size(DallE3Config.IMAGE_SIZE)
                 .build();
 
-        HttpEntity<String> requestHttpEntity = new HttpEntity<>(objectMapper.writeValueAsString(imageGenerationRequest), httpHeaders);
+        HttpEntity<ImageGenerationRequest> requestHttpEntity = new HttpEntity<>(imageGenerationRequest, httpHeaders);
 
         ResponseEntity<ImageGenerationResponseTest> responseEntity = restTemplate.postForEntity(
                 DallE3Config.IMAGE_URL,

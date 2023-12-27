@@ -1,9 +1,11 @@
 package com.ssafy.imgMaker22.upload;
 
 import com.ssafy.imgMaker22.config.S3Uploader;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,6 +16,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 
+@SpringBootTest
+@Slf4j
 public class UploadTest {
 
     @Autowired
@@ -28,7 +32,7 @@ public class UploadTest {
         String base64Encoded = Base64.getEncoder().encodeToString(imageBytes);
         byte[] decodedBytes = java.util.Base64.getDecoder().decode(base64Encoded);
 
-        System.out.println(fileUploadTest(decodedBytes));
+        log.info("stored file url : {}", fileUploadTest(decodedBytes));
         Assertions.assertThat(Arrays.toString(imageBytes)).isEqualTo(Arrays.toString(decodedBytes));
     }
 

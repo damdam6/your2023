@@ -2,6 +2,7 @@ package com.ssafy.imgMaker22.prompt;
 
 import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
 import com.ssafy.imgMaker22.model.service.PromptService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
+@Slf4j
 public class PromptTest {
 
     @Autowired
@@ -35,6 +37,6 @@ public class PromptTest {
         
         String prompt = promptService.makePromptTest(imageUrls, style);
 
-        System.out.println("prompt = " + prompt);
+        log.info("prompt : {}", prompt);
     }
 }

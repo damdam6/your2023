@@ -1,8 +1,6 @@
-package com.ssafy.imgMaker22.model.service;
+package com.ssafy.imgMaker22.model.service.file;
 
-import com.google.cloud.spring.vision.CloudVisionTemplate;
-import com.ssafy.imgMaker22.config.S3Uploader;
-import com.ssafy.imgMaker22.model.dto.GeneratedImage;
+import com.ssafy.imgMaker22.model.entity.GeneratedImage;
 import com.ssafy.imgMaker22.model.repository.MainRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,12 @@
-package com.ssafy.imgMaker22.model.service;
+package com.ssafy.imgMaker22.model.service.keyword;
 
 import com.google.cloud.spring.vision.CloudVisionTemplate;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.ColorInfo;
 import com.google.cloud.vision.v1.DominantColorsAnnotation;
 import com.google.cloud.vision.v1.Feature;
-import com.ssafy.imgMaker22.model.dto.prompt.ImageRequest;
-import com.ssafy.imgMaker22.model.dto.prompt.PromptDto;
+import com.ssafy.imgMaker22.model.service.keyword.dto.PromptDto;
+import com.ssafy.imgMaker22.model.service.prompt.dto.ImageUrlDto;
 import com.ssafy.imgMaker22.model.enums.PromptDTOEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,22 +18,26 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
+/**
+ * GPT4에 이미지를 직접 넣을 수 있는 기능이 생기면서 키워드 기능 사용하지 않아 deprecated됨
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Deprecated
 public class KeywordGenerationServiceCloudVision implements KeywordGenerationService {
 
     private static final int MAX_KEYWORD_COUNT = 2;
     private static final int MAX_COLOR_COUNT = 1;
 
     @Autowired
-    private ResourceLoader resourceLoader;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
-    private CloudVisionTemplate cloudVisionTemplate;
+    private final CloudVisionTemplate cloudVisionTemplate;
 
     @Override
-    public Flux<PromptDto> getKeywords(List<ImageRequest> imageRequests) {
+    public Flux<PromptDto> getKeywords(List<ImageUrlDto> imageRequests) {
         return Flux.fromIterable(imageRequests)
                 .flatMap(imageRequest -> {
                     Resource imageResource = resourceLoader.getResource(imageRequest.getUrl());
@@ -52,7 +56,7 @@ public class KeywordGenerationServiceCloudVision implements KeywordGenerationSer
 
 
 
-    public Flux<PromptDto> getColors(List<ImageRequest> imageRequests){
+    public Flux<PromptDto> getColors(List<ImageUrlDto> imageRequests){
 
         return Flux.fromIterable(imageRequests)
                 .flatMap(imageRequest -> {

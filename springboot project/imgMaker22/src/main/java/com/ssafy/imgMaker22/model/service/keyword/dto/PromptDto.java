@@ -1,9 +1,13 @@
-package com.ssafy.imgMaker22.model.dto.prompt;
+package com.ssafy.imgMaker22.model.service.keyword.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * GPT4에 이미지를 직접 넣을 수 있는 기능이 생기면서 키워드 기능 사용하지 않아 deprecated됨
+ */
+@Deprecated
 @Getter @Setter @ToString
 public class PromptDto implements Comparable<PromptDto>{
     private String prompt;

@@ -1,12 +1,10 @@
-package com.ssafy.imgMaker22.model.service;
+package com.ssafy.imgMaker22.model.service.image;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.imgMaker22.config.DallE3Config;
-import com.ssafy.imgMaker22.model.dto.image.ImageGenerationRequest;
-import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponse;
-import com.ssafy.imgMaker22.model.dto.image.ImageGenerationResponseTest;
-import com.ssafy.imgMaker22.model.dto.image.PromptRequest;
+import com.ssafy.imgMaker22.model.service.image.dto.ImageGenerationRequest;
+import com.ssafy.imgMaker22.model.service.image.dto.ImageGenerationResponse;
+import com.ssafy.imgMaker22.model.service.image.dto.ImageGenerationResponseTest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +28,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
     private String apiKey;
 
     @Override
-    public ImageGenerationResponse makeImages(PromptRequest commentRequest){
+    public ImageGenerationResponse makeImages(String generatedPrompt){
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
@@ -38,7 +36,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
 
         ImageGenerationRequest imageGenerationRequest = ImageGenerationRequest.builder()
                 .model(DallE3Config.MODEL)
-                .prompt(commentRequest.getPrompt())
+                .prompt(generatedPrompt)
                 .response_format(DallE3Config.RESPONSE_FORMAT)
                 .n(DallE3Config.IMAGE_COUNT)
                 .size(DallE3Config.IMAGE_SIZE)
@@ -56,7 +54,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
     }
 
     @Override
-    public ImageGenerationResponseTest makeImagesURLTEST(PromptRequest commentRequest) throws JsonProcessingException {
+    public ImageGenerationResponseTest makeImagesURLTEST(String generatedPrompt) throws JsonProcessingException {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(DallE3Config.MEDIA_TYPE));
@@ -64,7 +62,7 @@ public class ImageGenerationServiceDALLE3 implements ImageGenerationService {
 
         ImageGenerationRequest imageGenerationRequest = ImageGenerationRequest.builder()
                 .model(DallE3Config.MODEL)
-                .prompt(commentRequest.getPrompt())
+                .prompt(generatedPrompt)
                 .n(DallE3Config.IMAGE_COUNT)
                 .response_format(DallE3Config.RESPONSE_FORMAT_URL)
                 .size(DallE3Config.IMAGE_SIZE)

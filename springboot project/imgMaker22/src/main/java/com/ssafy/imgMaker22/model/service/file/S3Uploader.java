@@ -1,4 +1,4 @@
-package com.ssafy.imgMaker22.config;
+package com.ssafy.imgMaker22.model.service.file;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

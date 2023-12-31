@@ -1,6 +1,6 @@
 package com.ssafy.imgMaker22.model.repository;
 
-import com.ssafy.imgMaker22.model.dto.GeneratedImage;
+import com.ssafy.imgMaker22.model.entity.GeneratedImage;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;

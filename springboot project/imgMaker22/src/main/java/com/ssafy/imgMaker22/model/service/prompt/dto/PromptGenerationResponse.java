@@ -1,4 +1,4 @@
-package com.ssafy.imgMaker22.model.dto.prompt;
+package com.ssafy.imgMaker22.model.service.prompt.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.ssafy.imgMaker22.upload;
 
-import com.ssafy.imgMaker22.config.S3Uploader;
+import com.ssafy.imgMaker22.model.service.file.S3Uploader;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

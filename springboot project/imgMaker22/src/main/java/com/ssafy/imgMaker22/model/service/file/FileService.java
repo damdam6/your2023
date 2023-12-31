@@ -1,6 +1,6 @@
-package com.ssafy.imgMaker22.model.service;
+package com.ssafy.imgMaker22.model.service.file;
 
-import com.ssafy.imgMaker22.model.dto.GeneratedImage;
+import com.ssafy.imgMaker22.model.entity.GeneratedImage;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ssafy.imgMaker22.model.dto.image;
+package com.ssafy.imgMaker22.model.service.image.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

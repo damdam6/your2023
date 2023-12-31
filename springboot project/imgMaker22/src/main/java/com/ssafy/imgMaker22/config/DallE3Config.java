@@ -12,6 +12,5 @@ public class DallE3Config {
     public static final String RESPONSE_FORMAT = "b64_json";
     public static final String IMAGE_SIZE = "1024x1024";
     public static final String MODEL = "dall-e-3";
-
     public static final String RESPONSE_FORMAT_URL = "url";
 }

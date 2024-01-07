@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function Button() {
   const navigate = useNavigate();
   const onClick = () => {
-    navigate("/insert");
+    navigate("/insert/nickname");
   };
   return (
     <div className="inline-block mt-2 mr-2">

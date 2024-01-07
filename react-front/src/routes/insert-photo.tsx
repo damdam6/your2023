@@ -1,5 +1,5 @@
-import ExplainText from "../components/insert/explain-text";
-import InsertBox from "../components/insert/insert-box";
+import ExplainText from "../components/insert/photo/explain-text";
+import InsertBox from "../components/insert/photo/insert-box";
 
 export default function InsertPhoto() {
   return (

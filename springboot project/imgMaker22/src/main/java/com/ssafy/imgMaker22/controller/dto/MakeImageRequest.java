@@ -10,9 +10,12 @@ import java.util.List;
 @Getter
 public class MakeImageRequest {
 
+
     private List<Image> images;
     private String nickname;
     private String style;
+
+    public MakeImageRequest(){};
 
     @Builder
     public MakeImageRequest(List<Image> images, String nickname, String style) {

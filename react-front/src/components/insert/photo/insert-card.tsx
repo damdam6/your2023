@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface InsertCardProps {
   id: number;
@@ -6,10 +7,9 @@ interface InsertCardProps {
 }
 
 export default function InsertCard(props: InsertCardProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  // ... (existing code)
 
-  const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSaveFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const uploadFiles = e.target.files;
     if (!uploadFiles || uploadFiles.length === 0) {
       return;
@@ -18,19 +18,30 @@ export default function InsertCard(props: InsertCardProps) {
     const file = uploadFiles[0];
     setFile(file);
 
-    const reader = new FileReader();
+    const storage = getStorage();
+    const storageRef = ref(storage, `images/${file.name}`);
 
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setPreviewImage(reader.result);
-      }
-    };
+    try {
+      await uploadBytes(storageRef, file);
 
-    reader.readAsDataURL(uploadFiles[0]);
+      const imageUrl = await getDownloadURL(storageRef);
+      setPreviewImage(imageUrl);
+      props.onFileAdd(file);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    },
+    () => {
+      // Complete function ...
+      storageRef
+        import { getDownloadURL } from "firebase/storage";
 
-    setFile(uploadFiles[0]);
+        // ...
 
-    props.onFileAdd(file);
+        const imageUrl = await getDownloadURL(storageRef);
+        .then(url => {
+          setPreviewImage(url);
+        });
+    }
   };
 
   const squareClass = "w-52 h-52";
@@ -79,4 +90,11 @@ export default function InsertCard(props: InsertCardProps) {
       />
     </div>
   );
+}
+function setFile(file: File) {
+  throw new Error("Function not implemented.");
+}
+
+function setPreviewImage(imageUrl: string) {
+  throw new Error("Function not implemented.");
 }

@@ -4,6 +4,7 @@ import Layout from "./components/layout";
 import Home from "./routes/home";
 import InsertPhoto from "./routes/insert-photo";
 import Result from "./routes/result";
+import InsertNickname from "./routes/insert-nickname";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/insert",
+        path: "/insert/photo",
         element: <InsertPhoto />,
+      },
+      {
+        path: "/insert/nickname",
+        element: <InsertNickname />,
       },
       {
         path: "/result",

@@ -1,16 +1,18 @@
-import Slide from "../components/home/scroll/slide";
-import ButtonNextPage from "../components/home/title/button-next-page";
-import TitleText from "../components/home/title/title-text";
+import styled from 'styled-components';
+
+import Slide from '../components/home/scroll/slide';
+import Title from '../components/home/title/Title';
+
+const Wrapper = styled.div`
+  height: 100%;
+`;
 
 export default function Home() {
   return (
-    <div>
+    <Wrapper>
       <Slide />
-      <div className="flex flex-row">
-        <TitleText />
-        <ButtonNextPage />
-      </div>
+      <Title />
       <Slide />
-    </div>
+    </Wrapper>
   );
 }

@@ -1,4 +1,12 @@
 import React from "react";
+import styled from "styled-components"
+
+const Image = styled.img`
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  margin: 0 1%;
+`
 
 interface ImgBoxProps {
   src: string;
@@ -6,9 +14,7 @@ interface ImgBoxProps {
 
 const ImgBox: React.FC<ImgBoxProps> = ({ src }) => {
   return (
-    <div>
-      <img className="object-cover w-auto m-10 h-96" src={src} alt="Image" />
-    </div>
+      <Image src={src} alt="Image" />
   );
 };
 

@@ -5,7 +5,6 @@ import com.ssafy.imgMaker22.model.service.prompt.PromptService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ResourceLoader;
 
@@ -21,7 +20,6 @@ public class PromptTest {
     private ResourceLoader resourceLoader;
 
     @Autowired
-    @Qualifier("promptServiceGPT4")
     private PromptService promptService;
 
     @Test

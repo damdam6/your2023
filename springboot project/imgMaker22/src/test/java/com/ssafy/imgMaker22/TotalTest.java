@@ -6,7 +6,6 @@ import com.ssafy.imgMaker22.model.service.image.dto.ImageGenerationResponse;
 import com.ssafy.imgMaker22.model.service.prompt.dto.ImageUrlDto;
 import com.ssafy.imgMaker22.model.service.file.FileService;
 import com.ssafy.imgMaker22.model.service.image.ImageGenerationService;
-import com.ssafy.imgMaker22.model.service.keyword.KeywordGenerationService;
 import com.ssafy.imgMaker22.model.service.prompt.PromptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class TotalTest {
-
-    @Autowired
-    private KeywordGenerationService cloudVisionService;
 
     @Autowired
     private ResourceLoader resourceLoader;
